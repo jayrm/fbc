@@ -82,6 +82,10 @@
 #error __FB_OPTION_GOSUB__ not defined
 #endif
 
+#ifndef __FB_OPTION_OVERLOAD__
+#error __FB_OPTION_OVERLOAD__ not defined
+#endif
+
 #ifndef __FB_OUT_DLL__
 #error __FB_OUT_DLL__ not defined
 #endif

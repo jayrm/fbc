@@ -49,6 +49,8 @@ Version 1.20.0
 - fbc: '-print fork-id' command line option to report the fork-id version of fbc
 - fbc: '-nolib fbrt0.o' and '-nolib fbrt0pic.o' can be used to omit fb's startup files from the link.  Implied by '-nodeflibs'.
 - fbc: '-z nobuiltins' command line option to disable all non-required built-in procedure definitions
+- allow user written procedures to be overloaded by default with '#pragma overload [=value]' or '#pragma push( overload [,value] )' without having to specify the overload keyword on each first instance of a procedure
+- intrinsic define __FB_OPTION_OVERLOAD__ to indicate if overload procedures are default (true=overload is default)
 
 [fixed]
 - github #410: give consistent floating point comparisons results involving NaNs.

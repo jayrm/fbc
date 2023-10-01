@@ -1318,6 +1318,11 @@ function cProcHeader _
 			pattrib or= FB_PROCATTRIB_OVERLOADED
 		end if
 		lexSkipToken( LEXCHECK_POST_SUFFIX )
+
+	'' All procedures default to overload?
+	elseif( env.opt.procoverload ) then
+		pattrib or= FB_PROCATTRIB_OVERLOADED
+
 	end if
 
 	if( options and FB_PROCOPT_ISPROTO ) then

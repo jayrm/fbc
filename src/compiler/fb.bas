@@ -464,8 +464,9 @@ sub fbInit _
 	env.opt.procpublic      = TRUE
 	env.opt.escapestr       = FALSE
 	env.opt.dynamic         = FALSE
-	env.opt.base = 0
-	env.opt.gosub = (env.clopt.lang = FB_LANG_QB)
+	env.opt.base            = 0
+	env.opt.gosub           = (env.clopt.lang = FB_LANG_QB)
+	env.opt.procoverload    = FALSE
 
 	env.fbctinf_started = FALSE
 

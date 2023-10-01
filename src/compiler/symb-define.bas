@@ -158,6 +158,10 @@ private function hDefOptGosub_cb() as string
 	function = str( env.opt.gosub = TRUE )
 end function
 
+private function hDefOptOverload_cb() as string
+	function = str( env.opt.procoverload = TRUE )
+end function
+
 private function hDefGui_cb () as string
 	function = str( env.clopt.modeview = FB_MODEVIEW_GUI )
 end function
@@ -1271,6 +1275,7 @@ dim shared defTb(0 to ...) as SYMBDEF => _
 	(@"__FB_OPTION_EXPLICIT__", NULL          , 0                  , @hDefOptExplicit_cb), _
 	(@"__FB_OPTION_PRIVATE__" , NULL          , 0                  , @hDefOptPrivate_cb ), _
 	(@"__FB_OPTION_GOSUB__"   , NULL          , 0                  , @hDefOptGosub_cb   ), _
+	(@"__FB_OPTION_OVERLOAD__", NULL          , 0                  , @hDefOptOverload_cb), _
 	(@"__FB_OUT_EXE__"        , NULL          , 0                  , @hDefOutExe_cb     ), _
 	(@"__FB_OUT_LIB__"        , NULL          , 0                  , @hDefOutLib_cb     ), _
 	(@"__FB_OUT_DLL__"        , NULL          , 0                  , @hDefOutDll_cb     ), _

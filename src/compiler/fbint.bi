@@ -593,6 +593,7 @@ type FBOPTION
 	escapestr       as integer                  '' def    = false
 	dynamic         as integer                  '' def    = false
 	gosub           as integer                  '' def    = true in FB_LANG_QB, false in all other dialects
+	procoverload    as integer                  '' def    = false
 end type
 
 type FBMAIN
