@@ -922,7 +922,7 @@ private function cDynamicArrayIndex _
 		'' therefore, only perform the dimension check if array is not a field
 		if( symbIsField( sym ) = FALSE ) then
 			dimexpr = astNewCONSTI( dimension + 1 )
-			dimexpr = astBuildBOUNDCHK( dimexpr, NULL, NULL, sym )
+			dimexpr = astBuildDIMENSIONSCHK( dimexpr, sym )
 			expr = astNewLINK( dimexpr, expr, AST_LINK_RETURN_RIGHT )
 		end if
 	end if

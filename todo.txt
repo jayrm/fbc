@@ -137,7 +137,6 @@ o ThreadCall
     so they cannot safely be referenced from the thread...
 
 o -exx should catch...
-  - out-of-bounds dimension argument given to lbound()/ubound()
   - add an -exx aka -eboolean check to detect illegal boolean values on read?
   - expand on -elocation option to provide full location information or if not
     given (or implied) optimize out calls to fb_ErrorSetFuncName() and 

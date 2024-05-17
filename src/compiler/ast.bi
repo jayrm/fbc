@@ -870,6 +870,19 @@ declare function astNewBOUNDCHK _
 		byval ub as ASTNODE ptr, _
 		byval linenum as integer, _
 		byval filename as zstring ptr, _
+		byval sym as FBSYMBOL ptr, _
+		byval dimbound as integer _
+	) as ASTNODE ptr
+
+declare function astBuildDIMENSIONSCHK _
+	( _
+		byval expr as ASTNODE ptr, _
+		byval sym as FBSYMBOL ptr _
+	) as ASTNODE ptr
+
+declare function astBuildDIMBOUNDCHK _
+	( _
+		byval expr as ASTNODE ptr, _
 		byval sym as FBSYMBOL ptr _
 	) as ASTNODE ptr
 
@@ -1318,6 +1331,7 @@ declare function astBuildArrayBound _
 	( _
 		byval arrayexpr as ASTNODE ptr, _
 		byval dimexpr as ASTNODE ptr, _
+		byval sym as FBSYMBOL ptr, _
 		byval tk as integer _
 	) as ASTNODE ptr
 

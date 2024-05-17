@@ -21,12 +21,14 @@ function astNewBOUNDCHK _
 		byval ub as ASTNODE ptr, _
 		byval linenum as integer, _
 		byval filename as zstring ptr, _
-		byval sym as FBSYMBOL ptr _
+		byval sym as FBSYMBOL ptr, _
+		byval isdimbounds as integer _
 	) as ASTNODE ptr
 
 	dim as ASTNODE ptr n = any, arrayexpr = NULL
 
-	'' no lower / upper bound? then it's a dimensions check
+	'' no lower / upper bound?
+	'' then it's a dimensions check or dimensions bounds check
 	if( lb = NULL andalso ub = NULL ) then
 		'' Field? don't check dimension at runtime because
 		'' dimension mismatch should have been caught
@@ -79,7 +81,7 @@ function astNewBOUNDCHK _
 	'' check must be done using a function because calling ErrorThrow
 	'' would spill used regs only if it was called, causing wrong
 	'' assumptions after the branches
-	n->r = rtlArrayBoundsCheck( astNewVAR( n->sym ), arrayexpr, lb, ub, linenum, filename, sym->id.name )
+	n->r = rtlArrayBoundsCheck( astNewVAR( n->sym ), arrayexpr, lb, ub, linenum, filename, sym->id.name, isdimbounds )
 
 end function
 
@@ -129,6 +131,35 @@ function astLoadBOUNDCHK _
 
 end function
 
+function astBuildDIMENSIONSCHK _
+	( _
+		byval expr as ASTNODE ptr, _
+		byval sym as FBSYMBOL ptr _
+	) as ASTNODE ptr
+	function = astNewBOUNDCHK( expr, NULL, NULL, lexLineNum( ), env.inf.name, sym, FALSE )
+end function
+
+function astBuildDIMBOUNDCHK _
+	( _
+		byval dimexpr as ASTNODE ptr, _
+		byval sym as FBSYMBOL ptr _
+	) as ASTNODE ptr
+
+	dim as ASTNODE ptr tree = NULL
+	dim as integer dimension = any
+
+	if( astHasSideFx( dimexpr ) ) then
+		tree = astRemSideFx( dimexpr )
+	end if
+	dimexpr = astNewLINK( tree, _
+	          astNewLINK( astNewBOUNDCHK( astCloneTree( dimexpr ), NULL, NULL, lexLineNum( ), env.inf.name, sym, TRUE ), _
+	                      dimexpr, AST_LINK_RETURN_RIGHT ), _
+	          AST_LINK_RETURN_RIGHT )
+	assert( dimexpr )
+
+	function = dimexpr
+end function
+
 function astBuildBOUNDCHK _
 	( _
 		byval expr as ASTNODE ptr, _
@@ -136,7 +167,7 @@ function astBuildBOUNDCHK _
 		byval ub as ASTNODE ptr, _
 		byval sym as FBSYMBOL ptr _
 	) as ASTNODE ptr
-	function = astNewBOUNDCHK( expr, lb, ub, lexLineNum( ), env.inf.name, sym )
+	function = astNewBOUNDCHK( expr, lb, ub, lexLineNum( ), env.inf.name, sym, FALSE )
 end function
 
 '':::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

@@ -22,7 +22,8 @@ static const char *messages[] = {
 	"return without gosub",                 /* FB_RTERROR_RETURNWITHOUTGOSUB */
 	"end of file",                          /* FB_RTERROR_ENDOFFILE */
 	"array not dimensioned",                /* FB_RTERROR_NOTDIMENSIONED */
-	"wrong number of dimensions"            /* FB_RTERROR_WRONGDIMENSIONS */
+	"wrong number of dimensions",           /* FB_RTERROR_WRONGDIMENSIONS */
+	"dimension out of bounds"               /* FB_RTERROR_DIMOUTOFBOUNDS */
 };
 
 static void fb_Die

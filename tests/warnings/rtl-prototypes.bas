@@ -117,6 +117,12 @@
 		chk = procptr( fb_ArrayDimensionChk )
 	end scope
 
+	ID( function fb_ArrayDimBoundChk )
+	scope
+		dim chk as function fbcall ( byval as const integer, bydesc as const any, byval as const long, byval as const zstring ptr, byval as const zstring ptr ) as any ptr
+		chk = procptr( fb_ArrayDimBoundChk )
+	end scope
+
 #print "---- rtlConsole"
 
 	ID( function fb_ConsoleView )

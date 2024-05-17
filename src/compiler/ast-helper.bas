@@ -1047,6 +1047,7 @@ function astBuildArrayBound _
 	( _
 		byval arrayexpr as ASTNODE ptr, _
 		byval dimexpr as ASTNODE ptr, _
+		byval sym as FBSYMBOL ptr, _
 		byval tk as integer _
 	) as ASTNODE ptr
 
@@ -1063,6 +1064,14 @@ function astBuildArrayBound _
 	expr = hConstBound( arrayexpr, dimexpr, (tk = FB_TK_LBOUND) )
 
 	if( expr = NULL ) then
+
+		'' error check for number of dimensions
+		if( env.clopt.arraydimschk ) then
+			if( sym ) then
+				dimexpr = astBuildDIMBOUNDCHK( dimexpr, sym )
+			end if
+		end if
+
 		'' Fall back to run-time l/ubound(), that will work for array
 		'' declarations that can have non-const initializers, and cause
 		'' an error if a constant initializer was expected.

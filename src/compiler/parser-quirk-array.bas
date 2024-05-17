@@ -275,11 +275,15 @@ function cArrayFunct(byval tk as FB_TOKEN) as ASTNODE ptr
 			hMatchExpressionEx( dimexpr, FB_DATATYPE_INTEGER )
 		else
 			dimexpr = astNewCONSTi( 1 )
+
+			'' set array variable to NULL to prevent
+			'' the dimension bounds check
+			s = NULL
 		end if
 
 		'' ')'
 		hMatchRPRNT( )
 
-		function = astBuildArrayBound( arrayexpr, dimexpr, tk )
+		function = astBuildArrayBound( arrayexpr, dimexpr, s, tk )
 	end select
 end function

@@ -33,6 +33,10 @@ static void *hThrowError
 		pos += snprintf( &msg[pos], FB_ERRMSG_SIZE - pos,
 			"accessed with wrong number of dimensions, %" FB_LL_FMTMOD "d given but expected %" FB_LL_FMTMOD "d",
 			(long long int)idx, (long long int)ubound);
+	} else if ( errnum == FB_RTERROR_DIMOUTOFBOUNDS ) {
+		pos += snprintf( &msg[pos], FB_ERRMSG_SIZE - pos,
+			"accessed with invalid dimension, %" FB_LL_FMTMOD "d given but must be between %" FB_LL_FMTMOD "d and %" FB_LL_FMTMOD "d",
+			(long long int)idx, (long long int)lbound, (long long int)ubound);
 	} else {
 		pos += snprintf( &msg[pos], FB_ERRMSG_SIZE - pos,
 			"accessed with invalid index = %" FB_LL_FMTMOD "d, must be between %" FB_LL_FMTMOD "d and %" FB_LL_FMTMOD "d",
@@ -45,7 +49,7 @@ static void *hThrowError
 }
 
 FBCALL void *fb_ArrayDimensionChk
-	( 
+	(
 		ssize_t dimensions,
 		FBARRAY *array,
 		int linenum,
@@ -63,6 +67,35 @@ FBCALL void *fb_ArrayDimensionChk
 	if( ((size_t)dimensions != array->dimensions) ) {
 		return hThrowError( FB_RTERROR_WRONGDIMENSIONS,
 			dimensions, 0, array->dimensions, linenum, filename, variablename );
+	}
+
+	return NULL;
+}
+
+FBCALL void *fb_ArrayDimBoundChk
+	(
+		ssize_t dimension_idx,
+		FBARRAY *array,
+		int linenum,
+		const char *filename,
+		const char *variablename
+	)
+{
+	/* querying the number of dimensions must not throw an error */
+	if( dimension_idx == 0 ) {
+		return NULL;
+	}
+
+	/* unallocated array */
+	if( (array == NULL) || (array->data == NULL) ) {
+		return hThrowError( FB_RTERROR_NOTDIMENSIONED,
+		0, 0, 0, linenum, filename, variablename );
+	}
+
+	/* wrong number of dimensions? */
+	if( (dimension_idx < 1) || (dimension_idx > (ssize_t)array->dimensions) ) {
+		return hThrowError( FB_RTERROR_DIMOUTOFBOUNDS,
+			dimension_idx, 1, array->dimensions, linenum, filename, variablename );
 	}
 
 	return NULL;

@@ -52,6 +52,15 @@ FBCALL void *fb_ArrayDimensionChk
 		const char *variablename
 	);
 
+FBCALL void *fb_ArrayDimBoundChk
+	(
+		ssize_t dimension_idx,
+		FBARRAY *array,
+		int linenum,
+		const char *filename,
+		const char *variablename
+	);
+
 FBCALL size_t     fb_ArrayLen          ( FBARRAY *array );
 FBCALL size_t     fb_ArraySize         ( FBARRAY *array );
        void       fb_hArrayCtorObj     ( FBARRAY *array, FB_DEFCTOR ctor );
